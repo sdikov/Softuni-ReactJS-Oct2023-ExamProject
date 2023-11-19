@@ -4,8 +4,7 @@ import { Marker, Popup, useMap } from "react-leaflet";
 
 import * as airportService from '../../services/airportsService.js';
 
-
-const airplaneIcon = icon({
+const airportIcon = icon({
 	iconSize: [35, 35],
 	iconUrl: 'airport.svg'
 });
@@ -32,7 +31,7 @@ export default function Airports() {
 				<Marker
 					key={airport.code}
 					position={[airport.latitude, airport.longitude]}
-					icon={airplaneIcon}
+					icon={airportIcon}
 					zIndexOffset={1000}
 				>
 					<Popup>{airport.name}</Popup>

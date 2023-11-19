@@ -6,7 +6,7 @@ import { Marker, Polyline, useMap } from "react-leaflet";
 import "./MovingMarker.js"
 
 import * as airportService from '../../services/airportsService.js';
-import calculateDistance from "../../utils/calculateDistance.js";
+//import calculateDistance from "../../utils/calculateDistance.js";
 
 
 // const markerIcon = divIcon({
@@ -19,7 +19,9 @@ const airplaneIcon = icon({
 	iconUrl: 'airplane-icon.svg'
 });
 
-export default function AirplaneMarker({ pathCoordinates }) {
+export default function AirplaneMarker({ flightData }) {
+
+	console.log(`${flightData.departureAirport} > ${flightData.arrivalAirport}`);
 
 	const [marker, setMarker] = useState(null);
 	const [trackingPath, setTrackingPath] = useState([]);
@@ -32,21 +34,23 @@ export default function AirplaneMarker({ pathCoordinates }) {
 
 	const map = useMap();
 
-	// todo add as atr to plane
-	const planeSpeed = 800;
+	// flight Data
+	const planeSpeed = 800; // todo add as atr to plane
+	const departureAirport = flightData.departureAirport;
+	const arrivalAirport = flightData.arrivalAirport;
 	
 	// getting airports data
 	useEffect(() => {
 
 		console.log('getting async airports data...');
 
-		airportService.getOneByCode('SOF')
+		airportService.getOneByCode(departureAirport)
 			.then((data) => {
 				setDepartingAirport(data);
 				setStartPoint([data.latitude, data.longitude]);
 			});
 
-		airportService.getOneByCode('BOJ')
+		airportService.getOneByCode(arrivalAirport)
 			.then((data) => {
 				setArrivingAirport(data);
 				setEndPoint([data.latitude, data.longitude]);
@@ -64,7 +68,7 @@ export default function AirplaneMarker({ pathCoordinates }) {
 		// get the distance between airports (coordinates) and calculate some animation time
 		const distance = map.distance(startPoint, endPoint);
 		const animatedTime = (distance / planeSpeed) * 20;
-		console.log(`distance: ${distance}, planeSpeed: ${planeSpeed}, animatedTime: ${animatedTime}`);
+		//console.log(`distance: ${distance}, planeSpeed: ${planeSpeed}, animatedTime: ${animatedTime}`);
 
 		const animatedMarker = L.Marker.movingMarker([startPoint, endPoint], [animatedTime], { icon: airplaneIcon, zIndexOffset: 9000 }).addTo(map);
 

@@ -1,0 +1,42 @@
+{
+    "e9c3fa4e-c4d3-4df3-beab-8677ab87384a": {
+        "aircraftId": "d1632b6b-05db-4710-ab1d-0b7f49cda73e",
+        "flightNumber": "UNI-901",
+        "departureAirport": "SOF",
+        "arrivalAirport": "VAR",
+        "passengerCount": 197,
+        "status": "scheduled",
+        "isLanded": false,
+        "_id": "e9c3fa4e-c4d3-4df3-beab-8677ab87384a"
+    },
+    "5acecafc-beae-4e87-8fea-05200330cf2c": {
+        "aircraftId": "d1632b6b-05db-4710-ab1d-0b7f49cda73e",
+        "flightNumber": "UNI-902",
+        "departureAirport": "VAR",
+        "arrivalAirport": "SOF",
+        "passengerCount": 165,
+        "status": "scheduled",
+        "isLanded": false,
+        "_id": "5acecafc-beae-4e87-8fea-05200330cf2c"
+    },
+    "a5ac7a1b-b326-4cb4-912e-e2b8af1f03b6": {
+        "aircraftId": "e7f54ff5-b47f-45c6-b1e2-e38a2835ff8a",
+        "flightNumber": "UNI-407",
+        "departureAirport": "BOJ",
+        "arrivalAirport": "SOF",
+        "passengerCount": 202,
+        "status": "scheduled",
+        "isLanded": false,
+        "_id": "a5ac7a1b-b326-4cb4-912e-e2b8af1f03b6"
+    },
+    "b9df0749-f976-4d70-8a58-31a42f4c1f72": {
+        "aircraftId": "e7f54ff5-b47f-45c6-b1e2-e38a2835ff8a",
+        "flightNumber": "UNI-408",
+        "departureAirport": "SOF",
+        "arrivalAirport": "BOJ",
+        "passengerCount": 134,
+        "status": "scheduled",
+        "isLanded": false,
+        "_id": "b9df0749-f976-4d70-8a58-31a42f4c1f72"
+    }
+}
