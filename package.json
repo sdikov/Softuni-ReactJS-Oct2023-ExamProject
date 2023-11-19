@@ -1,0 +1,13 @@
+{
+	"name": "softuni-reactjs-oct2023-examproject",
+	"version": "1.0.1",
+	"description": "Alfa Tango Charlie is my final project for the ReactJS course",
+	"scripts": {
+		"dev": "npm run dev --prefix frontend",
+		"server": "cd backend && node server.js"
+	},
+	"dependencies": {
+	},
+	"devDependencies": {
+	}
+   }

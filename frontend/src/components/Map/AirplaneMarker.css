@@ -1,0 +1,6 @@
+.airplane-icon {
+	background-image: url('airplane-icon.svg');
+	background-size: contain;
+	width: 30px;
+	height: 30px;
+   }

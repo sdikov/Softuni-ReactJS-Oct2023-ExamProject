@@ -1,0 +1,34 @@
+{
+    "c5547c9b-0ce5-4011-af57-c000d67fce30": {
+        "name": "Sofia Airport",
+        "code": "SOF",
+        "city": "Sofia",
+        "latitude": 42.6965,
+        "longitude": 23.4115,
+        "_id": "c5547c9b-0ce5-4011-af57-c000d67fce30"
+    },
+    "4edd5ed3-5f81-41b9-81b8-e3e4d8039849": {
+        "name": "Varna Airport",
+        "code": "VAR",
+        "city": "Varna",
+        "latitude": 43.2324,
+        "longitude": 27.8256,
+        "_id": "4edd5ed3-5f81-41b9-81b8-e3e4d8039849"
+    },
+    "3bf1bcc8-c684-4852-a0d9-27086b9861b6": {
+        "name": "Burgas Airport",
+        "code": "BOJ",
+        "city": "Burgas",
+        "latitude": 42.5697,
+        "longitude": 27.5152,
+        "_id": "3bf1bcc8-c684-4852-a0d9-27086b9861b6"
+    },
+    "85ba70b7-5d63-417b-90ac-cd73f850398e": {
+        "name": "Plovdiv Airport",
+        "code": "PDV",
+        "city": "Plovdiv",
+        "latitude": 42.0678,
+        "longitude": 24.8506,
+        "_id": "85ba70b7-5d63-417b-90ac-cd73f850398e"
+    }
+}
