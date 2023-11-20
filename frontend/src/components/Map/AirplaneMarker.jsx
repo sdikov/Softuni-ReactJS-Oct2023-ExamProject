@@ -1,27 +1,31 @@
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, useContext } from "react";
 import { icon, divIcon } from 'leaflet';
 import { Marker, Polyline, useMap } from "react-leaflet";
-//import { LeafletTrackingMarker } from "react-leaflet-tracking-marker";
-//import "../../../node_modules/leaflet.motion/dist/leaflet.motion.js";
 import "./MovingMarker.js"
 
-import * as airportService from '../../services/airportsService.js';
-//import calculateDistance from "../../utils/calculateDistance.js";
+//import * as airportService from '../../services/airportsService.js';
 
-
-// const markerIcon = divIcon({
-// 	className: 'airplane-icon',
-// 	iconSize: [35, 35]
-// });
 const airplaneIcon = icon({
 	iconSize: [40, 40],
 	popupAnchor: [2, -20],
 	iconUrl: 'airplane-icon.svg'
 });
 
-export default function AirplaneMarker({ flightData }) {
+export default function AirplaneMarker({ aircraftData, flightsData }) {
 
-	console.log(`${flightData.departureAirport} > ${flightData.arrivalAirport}`);
+	const [aircraft, setAircraft] = useState(aircraftData);
+	const [flights, setFlights] = useState(flightsData);
+
+	// console.log(aircraft);
+	// console.log(flights);
+	
+	console.log(aircraft.aircraftRegistrationNumber);
+
+	return (
+		<></>
+	)
+
+	//console.log(`${flightData.departureAirport} > ${flightData.arrivalAirport}`);
 
 	const [marker, setMarker] = useState(null);
 	const [trackingPath, setTrackingPath] = useState([]);

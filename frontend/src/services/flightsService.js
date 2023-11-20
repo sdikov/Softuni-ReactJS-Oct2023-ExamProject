@@ -10,9 +10,9 @@ export const getAll = async () => {
     return Object.values(result);
 };
 
-export const getOneByCode = async (code) => {
+export const getManyByAircraftId = async (id) => {
 	// todo
-    // const result = await request.get(baseUrl);
-    // const airports = Object.values(result);
-    // return airports.find(airport => airport.code === code);
+    const result = await request.get(baseUrl);
+    const flights = Object.values(result);
+    return flights.filter(flight => flight.aircraftId === id);
  }

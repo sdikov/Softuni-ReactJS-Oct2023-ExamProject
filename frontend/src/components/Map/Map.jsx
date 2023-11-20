@@ -1,63 +1,47 @@
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, useContext } from "react";
 
 import { MapContainer, TileLayer } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import './Map.css';
 
+import Airport from "./Airport.jsx";
 import AirplaneMarker from './AirplaneMarker.jsx';
-import Airports from "./Airports.jsx";
 
-import * as airportService from '../../services/airportsService.js';
-import * as aircraftsService from '../../services/aircraftsService.js';
-import * as flightsService from '../../services/flightsService.js';
+import { FlightsContext } from "../../context/FlightsContext.jsx";
 
 export default function Map() {
 
-	const [flights, setFlights] = useState([]);
+	const [contextValue, updateFlightsCtx] = useContext(FlightsContext);
+	const [airports, setAirports] = useState([]);
 	const [aircrafts, setAircrafts] = useState([]);
+	const [flights, setFlights] = useState([]);
 
 	useEffect(() => {
-		//console.log('getting flights...');
-
-		flightsService.getAll()
-			.then((data) => {
-				setFlights(data);
-			});
-
-	}, []);
-
-	useEffect(() => {
-		//console.log(aircrafts);
-		if (flights.length === 0) {
-			return;
+		if (contextValue.aircrafts && contextValue.aircrafts.length > 0) {
+			setAircrafts(contextValue.aircrafts);
 		}
-		//console.log(flights);
-	}, [flights, aircrafts]);
-
-
-	// const pathCoordinates = [
-	// 	[42.6977, 23.3219], // Sofia, Bulgaria
-	// 	[42.0815, 24.8549], // Plovdiv, Bulgaria
-	// 	[42.4980, 27.4716], // Burgas, Bulgaria
-	// ];
-	const pathCoordinates = [];
-
-	// const pathCoordinates = [
-	// 	{ lat: 42.6977, lng: 23.3219 }, // Sofia, Bulgaria
-	// 	{ lat: 42.08154359319885, lng:24.854995087109568}, // Plovdiv, Bulgaria
-	// 	{ lat: 42.4980, lng: 27.4716 } // Burgas, Bulgaria
-	// ];
+		if (contextValue.airports && contextValue.airports.length > 0) {
+			setAirports(contextValue.airports);
+		}
+		if (contextValue.flights && contextValue.flights.length > 0) {
+			setFlights(contextValue.flights);
+		}
+	}, [contextValue, airports, aircrafts, flights]);
 
 	return (
 		<MapContainer center={[42.5049, 25.3188]} zoom={8}>
 			<TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" attribution='© OpenStreetMap contributors' />
-			{flights.map((flightData) => (
+			{aircrafts && flights && aircrafts.map((aircraft) => (
 				<AirplaneMarker
-					key={flightData._id}
-					flightData={flightData}
+					key={aircraft._id}
+					aircraftData={aircraft}
+					flightsData={flights}
 				/>
 			))}
-			<Airports />
+			{airports && airports.map((airport) => (
+				<Airport key={airport._id} airportData={airport} />
+			))}
+
 		</MapContainer>
 	);
 }
