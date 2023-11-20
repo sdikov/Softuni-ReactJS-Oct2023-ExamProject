@@ -29,9 +29,18 @@ const FlightsContextProvider = ({ children }) => {
 			/**
 			 * Fetch flights data based on aircraft IDs
 			*/
+			const updatedAircraftsData = [];
 			const flightsData = await Promise.all(
-				aircraftsData.map(async (aircraft) => {
+				aircraftsData.map(async (aircraft, i) => {
 					const flightsArray = await flightsService.getManyByAircraftId(aircraft._id);
+
+					// put flights in object of each aircraft
+					updatedAircraftsData.push({
+						...aircraft,
+						flights: flightsArray,
+					});
+
+					//console.log(updatedAircraftsData);
 					return flightsArray;
 				})
 			).catch(error => {
@@ -43,7 +52,7 @@ const FlightsContextProvider = ({ children }) => {
 
 			setContextValue({
 				airports: airportsData,
-				aircrafts: aircraftsData,
+				aircrafts: updatedAircraftsData,
 				flights: flattenedFlights
 			});
 		}

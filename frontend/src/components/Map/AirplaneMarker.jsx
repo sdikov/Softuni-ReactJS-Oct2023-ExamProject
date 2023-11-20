@@ -11,15 +11,13 @@ const airplaneIcon = icon({
 	iconUrl: 'airplane-icon.svg'
 });
 
-export default function AirplaneMarker({ aircraftData, flightsData }) {
+export default function AirplaneMarker({ aircraftData }) {
 
 	const [aircraft, setAircraft] = useState(aircraftData);
-	const [flights, setFlights] = useState(flightsData);
 
-	// console.log(aircraft);
-	// console.log(flights);
-	
 	console.log(aircraft.aircraftRegistrationNumber);
+	//console.log(`${aircraft.departureAirport} > ${aircraft.arrivalAirport}`);
+	console.log(aircraft);
 
 	return (
 		<></>
@@ -42,7 +40,7 @@ export default function AirplaneMarker({ aircraftData, flightsData }) {
 	const planeSpeed = 800; // todo add as atr to plane
 	const departureAirport = flightData.departureAirport;
 	const arrivalAirport = flightData.arrivalAirport;
-	
+
 	// getting airports data
 	useEffect(() => {
 
@@ -68,7 +66,7 @@ export default function AirplaneMarker({ aircraftData, flightsData }) {
 		if (startPoint.length === 0 || endPoint.length === 0) {
 			return;
 		}
-		
+
 		// get the distance between airports (coordinates) and calculate some animation time
 		const distance = map.distance(startPoint, endPoint);
 		const animatedTime = (distance / planeSpeed) * 20;

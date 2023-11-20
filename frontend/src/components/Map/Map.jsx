@@ -35,7 +35,7 @@ export default function Map() {
 				<AirplaneMarker
 					key={aircraft._id}
 					aircraftData={aircraft}
-					flightsData={flights}
+					//flightsData={flights}
 				/>
 			))}
 			{airports && airports.map((airport) => (
