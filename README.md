@@ -35,5 +35,5 @@ Alfa Tango Charlie
 * [React Router](https://github.com/remix-run/react-router)
 * [Leaflet](https://github.com/Leaflet/Leaflet)
 * [React Leaflet](https://github.com/PaulLeCam/react-leaflet)
-* [Animation Plugin for Leaflet.js](https://github.com/Igor-Vladyka/leaflet.motion)
+* [Leaflet.MovingMarker](https://github.com/ewoken/Leaflet.MovingMarker)
 
