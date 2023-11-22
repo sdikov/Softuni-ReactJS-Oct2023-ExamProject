@@ -1,9 +1,7 @@
 import { useEffect, useState, useRef, useContext } from "react";
 import { icon, divIcon } from 'leaflet';
-import { Marker, Polyline, useMap } from "react-leaflet";
+import { Marker, Polyline, Popup, useMap } from "react-leaflet";
 import "./MovingMarker.js"
-
-//import * as airportService from '../../services/airportsService.js';
 
 const airplaneIcon = icon({
 	iconSize: [40, 40],
@@ -11,112 +9,80 @@ const airplaneIcon = icon({
 	iconUrl: 'airplane-icon.svg'
 });
 
+// todo: add as atr to plane?
+const planeSpeed = 5800;
+
 export default function AirplaneMarker({ aircraftData }) {
 
-	const [aircraft, setAircraft] = useState(aircraftData);
-
-	console.log(aircraft.aircraftRegistrationNumber);
-	//console.log(`${aircraft.departureAirport} > ${aircraft.arrivalAirport}`);
-	console.log(aircraft);
-
-	return (
-		<></>
-	)
-
-	//console.log(`${flightData.departureAirport} > ${flightData.arrivalAirport}`);
-
-	const [marker, setMarker] = useState(null);
-	const [trackingPath, setTrackingPath] = useState([]);
-
-	const [departingAirport, setDepartingAirport] = useState([]);
-	const [arrivingAirport, setArrivingAirport] = useState([]);
-
-	const [startPoint, setStartPoint] = useState([]);
-	const [endPoint, setEndPoint] = useState([]);
+	const [position, setPosition] = useState([0, 0]);
+	const [flights, setFlights] = useState(aircraftData.flights);
+	const [currentFlightIndex, setCurrentFlightIndex] = useState(0);
 
 	const map = useMap();
+	const markerRef = useRef(null);
 
-	// flight Data
-	const planeSpeed = 800; // todo add as atr to plane
-	const departureAirport = flightData.departureAirport;
-	const arrivalAirport = flightData.arrivalAirport;
-
-	// getting airports data
-	useEffect(() => {
-
-		console.log('getting async airports data...');
-
-		airportService.getOneByCode(departureAirport)
-			.then((data) => {
-				setDepartingAirport(data);
-				setStartPoint([data.latitude, data.longitude]);
-			});
-
-		airportService.getOneByCode(arrivalAirport)
-			.then((data) => {
-				setArrivingAirport(data);
-				setEndPoint([data.latitude, data.longitude]);
-			});
-
-	}, []);
+	//console.log(aircraftData);
 
 	useEffect(() => {
 
-		//ensure that the startPoint and endPoint values are available
-		if (startPoint.length === 0 || endPoint.length === 0) {
+		if (currentFlightIndex >= flights.length) {
 			return;
 		}
 
-		// get the distance between airports (coordinates) and calculate some animation time
+		const i = currentFlightIndex;
+
+		const startPoint = [
+			flights[i].arrivalAirportInfo.latitude,
+			flights[i].arrivalAirportInfo.longitude
+		];
+		const endPoint = [
+			flights[i].departureAirportInfo.latitude,
+			flights[i].departureAirportInfo.longitude
+		];
+
 		const distance = map.distance(startPoint, endPoint);
 		const animatedTime = (distance / planeSpeed) * 20;
-		//console.log(`distance: ${distance}, planeSpeed: ${planeSpeed}, animatedTime: ${animatedTime}`);
+		const randomDelay = Math.floor(Math.random() * 4000) + 1000;
 
-		const animatedMarker = L.Marker.movingMarker([startPoint, endPoint], [animatedTime], { icon: airplaneIcon, zIndexOffset: 9000 }).addTo(map);
+		if (markerRef.current) {
+			const animatedMarker = L.Marker.movingMarker(
+				[startPoint, endPoint],
+				[animatedTime],
+				{ icon: airplaneIcon, zIndexOffset: 9000 });
 
-		//setMarker(animatedMarker);
-		animatedMarker.start();
+			markerRef.current.movingMarkerElement = animatedMarker;
+			markerRef.current.movingMarkerElement.addTo(map);
+		}
 
+		setTimeout(() => {
+			markerRef.current.movingMarkerElement.on('start', () => {
+				console.log(`${flights[i].flightNumber} Captain: Cabin crew prepare for take-off...`);
+			});
 
-	}, [startPoint, endPoint]);
+			markerRef.current.movingMarkerElement.start();
 
-	return (
-		<></>
-	)
+		}, randomDelay);
 
-	useEffect(() => {
+		markerRef.current.movingMarkerElement.on('end', () => {
+			markerRef.current.movingMarkerElement.removeFrom(map);
+			console.log(markerRef.current);
 
-		// Create a polyline representing the tracking path
-		//const trackingPath = L.polyline([startPoint, endPoint], { color: 'blue' }).addTo(map);
-		//const trackingPath = L.polyline([startPoint, endPoint]).addTo(map);
+			console.log(`
+				${aircraftData.airlineName} flight
+				${flights[i].flightNumber} 
+				from ${flights[i].departureAirportInfo.city} 
+				has just landed at 
+				${flights[i].arrivalAirportInfo.name}
+				Clap! Clap! Clap! Great job Captain! ;)))
+			`);
 
-		// Create a marker at the starting point
-		const animatedMarker = L.Marker.movingMarker([startPoint], [3000], { icon: airplaneIcon, zIndexOffset: 9000 }).addTo(map);
-
-		// ?
-		setMarker(animatedMarker);
-
-		animatedMarker.start();
-
-		// When the marker moves, update the tracking path
-		animatedMarker.on('move', () => {
-			setTrackingPath([...trackingPath, animatedMarker.getLatLng()]);
+			setCurrentFlightIndex((currentFlightIndex) => currentFlightIndex + 1);
 		});
 
-		// When the animation ends, remove the tracking path
-		animatedMarker.on('end', () => {
-			console.log('end');
-			setTrackingPath([]);
-			// if (trackingPath.length > 1) {
-			// 	setTrackingPath([]); // Reset the tracking path when the animation ends
-			// }
-		});
-
-	}, []);
+	}, [currentFlightIndex, flights]);
 
 	return (
-		<>
-		</>
+		<Marker ref={markerRef} position={position} />
 	);
 
 }

@@ -34,10 +34,38 @@ const FlightsContextProvider = ({ children }) => {
 				aircraftsData.map(async (aircraft, i) => {
 					const flightsArray = await flightsService.getManyByAircraftId(aircraft._id);
 
+					// get Airport info
+					// todo: make a better query when switch to collection data queries
+					const flightsWithAirportInfo = [];
+					for (const flightId in flightsArray) {
+						const flight = flightsArray[flightId];
+					 
+						// Find departure airport information
+						const departureAirportCode = flight.departureAirport;
+						const departureAirportInfo = airportsData.find(airport => airport.code === departureAirportCode);
+					 
+						// Find arrival airport information
+						const arrivalAirportCode = flight.arrivalAirport;
+						const arrivalAirportInfo = airportsData.find(airport => airport.code === arrivalAirportCode);
+					 
+						// Add airport information to the flight
+						flightsWithAirportInfo[flightId] = {
+						  ...flight,
+						  departureAirportInfo,
+						  arrivalAirportInfo,
+						};
+					   }
+
+					//console.log('------ / START ------');
+					//console.log(airportsData);
+					//console.log(flightsWithAirportInfo);
+					//console.log('------ / END ------');
+
+
 					// put flights in object of each aircraft
 					updatedAircraftsData.push({
 						...aircraft,
-						flights: flightsArray,
+						flights: flightsWithAirportInfo,
 					});
 
 					//console.log(updatedAircraftsData);
