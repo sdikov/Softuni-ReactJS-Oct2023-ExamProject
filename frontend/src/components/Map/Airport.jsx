@@ -4,7 +4,7 @@ import { Marker, Popup } from "react-leaflet";
 
 const airportIcon = icon({
 	iconSize: [35, 35],
-	iconUrl: 'airport.svg'
+	iconUrl: 'images/airport.svg'
 });
 
 export default function Airport({ airportData }) {

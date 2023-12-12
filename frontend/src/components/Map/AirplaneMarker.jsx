@@ -10,7 +10,7 @@ import calculateBearing from "../../utils/calculateBearing.js";
 const airplaneIcon = icon({
 	iconSize: [40, 40],
 	popupAnchor: [2, -20],
-	iconUrl: 'airplane-orange.svg',
+	iconUrl: 'images/airplane-orange.svg',
 	className: 'airplane-icon'
 });
 
