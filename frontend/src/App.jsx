@@ -9,17 +9,17 @@ function App() {
 
   return (
     <FlightsContextProvider>
-
-      <main className='d-flex flex-nowrap'>
-        <Sidebar />
-        <Routes>
-          <Route path="/" element={<Map />} />
-          <Route path="/home" element={<Home />} />
-        </Routes>
-      </main >
-
-
-
+      <div className='container-fluid'>
+        <div className='row flex-nowrap'>
+          <Sidebar />
+          <main className='vh-100 bg-dark col py-3'>
+            <Routes>
+              <Route path="/" element={<Map />} />
+              <Route path="/home" element={<Home />} />
+            </Routes>
+          </main >
+        </div>
+      </div>
     </FlightsContextProvider >
   )
 }
