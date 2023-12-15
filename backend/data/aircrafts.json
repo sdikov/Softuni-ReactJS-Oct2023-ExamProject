@@ -3,12 +3,14 @@
         "airlineName": "SoftUni Air",
         "aircraftType": "Airbus A320",
         "aircraftRegistrationNumber": "LZ-LVQ",
+		"currentFlightIndex": 0,
         "_id": "d1632b6b-05db-4710-ab1d-0b7f49cda73e"
     },
     "e7f54ff5-b47f-45c6-b1e2-e38a2835ff8a": {
         "airlineName": "SoftUni Air",
         "aircraftType": "Airbus A320",
         "aircraftRegistrationNumber": "LZ-PZR",
+		"currentFlightIndex": 0,
         "_id": "e7f54ff5-b47f-45c6-b1e2-e38a2835ff8a"
     }
 }

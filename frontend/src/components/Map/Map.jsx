@@ -9,9 +9,9 @@ import AirplaneMarker from './AirplaneMarker.jsx';
 
 import { FlightsContext } from "../../context/FlightsContext.jsx";
 
-export default function Map({}) {
+export default function Map({ }) {
 
-	const [contextValue, updateFlightsCtx] = useContext(FlightsContext);
+	const [flightsCtx, updateFlightsCtx] = useContext(FlightsContext);
 	const [airports, setAirports] = useState([]);
 	const [aircrafts, setAircrafts] = useState([]);
 	const [flights, setFlights] = useState([]);
@@ -20,25 +20,26 @@ export default function Map({}) {
 	const darkMapAttribution = 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors';
 
 	useEffect(() => {
-		if (contextValue.aircrafts && contextValue.aircrafts.length > 0) {
-			setAircrafts(contextValue.aircrafts);
+		if (flightsCtx.aircrafts && flightsCtx.aircrafts.length > 0) {
+			setAircrafts(flightsCtx.aircrafts);
 		}
-		if (contextValue.airports && contextValue.airports.length > 0) {
-			setAirports(contextValue.airports);
+		if (flightsCtx.airports && flightsCtx.airports.length > 0) {
+			setAirports(flightsCtx.airports);
 		}
-		if (contextValue.flights && contextValue.flights.length > 0) {
-			setFlights(contextValue.flights);
+		if (flightsCtx.flights && flightsCtx.flights.length > 0) {
+			setFlights(flightsCtx.flights);
 		}
-	}, [contextValue, airports, aircrafts, flights]);
+	}, [flightsCtx, airports, aircrafts, flights]);
 
 	return (
 		<MapContainer center={[42.5049, 25.3188]} zoom={8}>
 			{/* <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" attribution='© OpenStreetMap contributors' /> */}
 			<TileLayer url={darkMapUrl} attribution={darkMapAttribution} />
-			{aircrafts && flights && aircrafts.map((aircraft) => (
+			{aircrafts && flights && aircrafts.map((aircraft, index) => (
 				<AirplaneMarker
 					key={aircraft._id}
 					aircraftData={aircraft}
+					aircraftIndex={index}
 				/>
 			))}
 			{airports && airports.map((airport) => (

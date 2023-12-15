@@ -22,9 +22,6 @@ export default function Sidebar() {
 				<li className="nav-item">
 					<Link to="/" className="nav-link text-white">Home</Link>
 				</li>
-				<li className="nav-item">
-					<Link to="/home" className="nav-link text-white">HomeTest</Link>
-				</li>
 			</ul>
 
 		</div>

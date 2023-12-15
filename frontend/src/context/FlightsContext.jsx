@@ -39,22 +39,22 @@ const FlightsContextProvider = ({ children }) => {
 					const flightsWithAirportInfo = [];
 					for (const flightId in flightsArray) {
 						const flight = flightsArray[flightId];
-					 
+
 						// Find departure airport information
 						const departureAirportCode = flight.departureAirport;
 						const departureAirportInfo = airportsData.find(airport => airport.code === departureAirportCode);
-					 
+
 						// Find arrival airport information
 						const arrivalAirportCode = flight.arrivalAirport;
 						const arrivalAirportInfo = airportsData.find(airport => airport.code === arrivalAirportCode);
-					 
+
 						// Add airport information to the flight
 						flightsWithAirportInfo[flightId] = {
-						  ...flight,
-						  departureAirportInfo,
-						  arrivalAirportInfo,
+							...flight,
+							departureAirportInfo,
+							arrivalAirportInfo,
 						};
-					   }
+					}
 
 					//console.log('------ / START ------');
 					//console.log(airportsData);
@@ -89,8 +89,18 @@ const FlightsContextProvider = ({ children }) => {
 
 	}, []);
 
+	/**
+	 * update context
+	 * Ensure that you create a new reference for the nested object
+	 */
 	const updateContextValue = (newValue) => {
-		setContextValue(newValue);
+		//setContextValue(newValue);
+		
+		setContextValue((prevState) => ({
+			...prevState,
+			newValue
+		}));
+
 	};
 
 	return (
