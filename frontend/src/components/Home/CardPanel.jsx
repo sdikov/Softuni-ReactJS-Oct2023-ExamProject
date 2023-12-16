@@ -2,6 +2,8 @@
 import { useState, useEffect, useContext, useRef } from 'react';
 
 import { FlightsContext } from "../../context/FlightsContext.jsx";
+import { useMarkerContext } from "../../context/AirplaneMarkerContext.jsx";
+
 
 export default function CardPanel() {
 
@@ -9,6 +11,7 @@ export default function CardPanel() {
 	const [aircrafts, setAircrafts] = useState([]);
 
 	const cardRefs = useRef([]);
+	const { addRef, getRef } = useMarkerContext();
 
 	const updateCard = (cardId, newState) => {
 		const cardRef = cardRefs.current[cardId];
@@ -16,7 +19,7 @@ export default function CardPanel() {
 			cardRef.querySelector('.flight-info').textContent = newState.flightInfo;
 			cardRef.querySelector('.flight-number').textContent = newState.flightNumber;
 			cardRef.querySelector('.flight-status').textContent = newState.flightStatus;
-			
+
 			if (newState.flightStatus == 'In Flight') {
 				cardRef.querySelector('.flight-status').classList.add('text-success');
 				cardRef.querySelector('.flight-status').classList.remove('text-danger');
@@ -26,6 +29,13 @@ export default function CardPanel() {
 			}
 		}
 	};
+
+
+	const handleCardClick = (aircraftId) => {
+		const markerRef = getRef(aircraftId);
+		markerRef.movingMarkerElement.openPopup();
+	};
+
 
 	useEffect(() => {
 
@@ -53,7 +63,6 @@ export default function CardPanel() {
 				updateCard(aircraft._id, { flightStatus });
 			}
 		});
-		//console.log(aircrafts);
 
 
 	}, [contextValue, aircrafts]);
@@ -61,7 +70,11 @@ export default function CardPanel() {
 	return (
 		<>
 			{aircrafts && aircrafts.map((aircraft, index) => (
-				<div className="card mb-2" key={aircraft._id} ref={(el) => (cardRefs.current[aircraft._id] = el)}>
+				<div className="card mb-2 cursor-pointer"
+					key={aircraft._id}
+					ref={(el) => (cardRefs.current[aircraft._id] = el)}
+					onClick={() => handleCardClick(aircraft._id)}
+				>
 					<div className="card-body">
 						<div className="d-flex justify-content-between">
 							<div className='h5'>{aircraft.aircraftRegistrationNumber}</div>

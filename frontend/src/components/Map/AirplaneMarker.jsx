@@ -7,6 +7,8 @@ import "./leaflet.rotatedMarker.js"
 import calculateBearing from "../../utils/calculateBearing.js";
 
 import { FlightsContext } from "../../context/FlightsContext.jsx";
+import { useMarkerContext } from "../../context/AirplaneMarkerContext.jsx";
+
 
 const airplaneIcon = icon({
 	iconSize: [40, 40],
@@ -30,11 +32,18 @@ export default function AirplaneMarker({ aircraftData, aircraftIndex }) {
 
 	const map = useMap();
 	const markerRef = useRef(null);
-
+	const { addRef, getRef } = useMarkerContext();
+	
+	/**
+	 * create and store a separate ref for each instance
+	 * of the AirplaneMarker component
+	 */
+	// todo
+	addRef(aircraftData._id, markerRef);
 
 	/**
 	 * Update all global context
-	 * when the aircraft has landed
+	 * when the aircraft is in flight or has landed
 	*/
 	const handleUpdateFlightsCtx = (index, data, flightIndex) => {
 
@@ -46,6 +55,8 @@ export default function AirplaneMarker({ aircraftData, aircraftIndex }) {
 
 	useEffect(() => {
 
+		//return;
+
 		if (currentFlightIndex >= flights.length) {
 			return;
 		}
@@ -56,7 +67,7 @@ export default function AirplaneMarker({ aircraftData, aircraftIndex }) {
 		const startPoint = [
 			currentFlightData.departureAirportInfo.latitude,
 			currentFlightData.departureAirportInfo.longitude
-			
+
 		];
 
 		const endPoint = [
@@ -88,8 +99,14 @@ export default function AirplaneMarker({ aircraftData, aircraftIndex }) {
 			const iconRotation = bearing - 270;
 			markerRef.current.movingMarkerElement.options.rotationAngle = iconRotation;
 			markerRef.current.movingMarkerElement.options.rotationOrigin = 'center center';
-			
+
+			markerRef.current.movingMarkerElement.bindPopup(
+				currentFlightData.flightNumber,
+				{ autoClose: false, autoPan: false }
+			);
+
 			markerRef.current.movingMarkerElement.addTo(map);
+			//markerRef.current.movingMarkerElement.openPopup();
 
 		}
 
@@ -122,7 +139,7 @@ export default function AirplaneMarker({ aircraftData, aircraftIndex }) {
 			// update aircraft state in global cntx
 			//currentFlightData.inFlight = false;
 			currentFlightData.isLanded = true;
-			
+
 			handleUpdateFlightsCtx(currentFlightIndex, currentFlightData, nextFlightIndex);
 
 			setCurrentFlightIndex((currentFlightIndex) => currentFlightIndex + 1);
