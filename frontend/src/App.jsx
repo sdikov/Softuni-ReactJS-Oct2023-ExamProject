@@ -2,6 +2,9 @@ import { Routes, Route } from 'react-router-dom';
 
 import Header from './components/Header/Header.jsx';
 import Home from './components/Home/Home.jsx';
+import Login from './components/Auth/Login.jsx';
+import Register from './components/Auth/Register.jsx';
+import Fleet from './components/Fleet/Fleet.jsx';
 
 import { FlightsContextProvider } from "./context/FlightsContext.jsx";
 
@@ -16,6 +19,9 @@ function App() {
 
             <Routes>
               <Route path="/" element={<Home />} />
+              <Route path="/auth/login" element={<Login />} />
+              <Route path="/auth/register" element={<Register />} />
+              <Route path="/fleet" element={<Fleet />} />
             </Routes>
 
           </main >
