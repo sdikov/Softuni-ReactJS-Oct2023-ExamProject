@@ -4,10 +4,10 @@ import { icon, divIcon } from 'leaflet';
 import { Marker, Polyline, Popup, useMap } from "react-leaflet";
 import "./MovingMarker.js"
 import "./leaflet.rotatedMarker.js"
-import calculateBearing from "../../utils/calculateBearing.js";
+import calculateBearing from "../../../utils/calculateBearing.js";
 
-import { FlightsContext } from "../../context/FlightsContext.jsx";
-import { useMarkerContext } from "../../context/AirplaneMarkerContext.jsx";
+import { FlightsContext } from "../../../context/FlightsContext.jsx";
+import { useMarkerContext } from "../../../context/AirplaneMarkerContext.jsx";
 
 
 const airplaneIcon = icon({

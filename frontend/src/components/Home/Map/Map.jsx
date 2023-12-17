@@ -7,7 +7,7 @@ import './Map.css';
 import Airport from "./Airport.jsx";
 import AirplaneMarker from './AirplaneMarker.jsx';
 
-import { FlightsContext } from "../../context/FlightsContext.jsx";
+import { FlightsContext } from "../../../context/FlightsContext.jsx";
 
 export default function Map({ }) {
 
@@ -15,6 +15,8 @@ export default function Map({ }) {
 	const [airports, setAirports] = useState([]);
 	const [aircrafts, setAircrafts] = useState([]);
 	const [flights, setFlights] = useState([]);
+
+	let activeAircrafts = [];
 
 	const darkMapUrl = 'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png';
 	const darkMapAttribution = 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors';
@@ -31,11 +33,14 @@ export default function Map({ }) {
 		}
 	}, [flightsCtx, airports, aircrafts, flights]);
 
+	activeAircrafts = aircrafts.filter((aircraft) => aircraft.isActive === true) || [];
+	//console.log(activeAircrafts);
+
 	return (
 		<MapContainer center={[42.5049, 25.3188]} zoom={8}>
 			{/* <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" attribution='© OpenStreetMap contributors' /> */}
 			<TileLayer url={darkMapUrl} attribution={darkMapAttribution} />
-			{aircrafts && flights && aircrafts.map((aircraft, index) => (
+			{activeAircrafts && activeAircrafts.map((aircraft, index) => (
 				<AirplaneMarker
 					key={aircraft._id}
 					aircraftData={aircraft}

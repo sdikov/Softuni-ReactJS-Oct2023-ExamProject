@@ -8,34 +8,41 @@ import { useMarkerContext } from "../../context/AirplaneMarkerContext.jsx";
 export default function CardPanel() {
 
 	const [flightsCtx, updateFlightsCtx] = useContext(FlightsContext);
-	const [aircrafts, setAircrafts] = useState([]);
+	//const [aircrafts, setAircrafts] = useState([]);
+	
+	// show only active aircrafts
+	const activeAircrafts = flightsCtx?.aircrafts?.filter((aircraft) => aircraft.isActive === true) || [];
 
 	const cardRefs = useRef([]);
 	const { addRef, getRef } = useMarkerContext();
 
-	const updateCard = (cardId, newState) => {
+	/**
+	 * update card information
+	 * based on current flight aircraft info
+	 */
+	const updateCard = (cardId, values) => {
 		const cardRef = cardRefs.current[cardId];
 		if (cardRef) {
-			cardRef.querySelector('.flight-info').textContent = newState.flightInfo;
-			cardRef.querySelector('.flight-number').textContent = newState.flightNumber;
-			cardRef.querySelector('.flight-status').textContent = newState.flightStatus;
+			const { flightInfo, flightNumber, flightStatus } = values;
+			cardRef.querySelector('.flight-info').textContent = flightInfo;
+			cardRef.querySelector('.flight-number').textContent = flightNumber;
+			cardRef.querySelector('.flight-status').textContent = flightStatus;
 
-			if (newState.flightStatus == 'In Flight') {
-				cardRef.querySelector('.flight-status').classList.add('text-success');
-				cardRef.querySelector('.flight-status').classList.remove('text-danger');
-			} else {
-				cardRef.querySelector('.flight-status').classList.add('text-danger');
-				cardRef.querySelector('.flight-status').classList.remove('text-success');
-			}
+			const inFlight = flightStatus === 'In Flight';
+			cardRef.querySelector('.flight-status').classList.toggle('text-success', inFlight);
+			cardRef.querySelector('.flight-status').classList.toggle('text-danger', !inFlight);
 		}
 	};
 
 
+	/**
+	 * open marker popup
+	 * when card is clicked
+	 */
 	const handleCardClick = (aircraftId) => {
 		const markerRef = getRef(aircraftId);
 		markerRef.movingMarkerElement.openPopup();
 	};
-
 
 	useEffect(() => {
 
@@ -43,17 +50,11 @@ export default function CardPanel() {
 		if (Object.keys(flightsCtx).length === 0) {
 			return;
 		}
-
-		setAircrafts(flightsCtx.aircrafts);
-
-		aircrafts.map((aircraft) => {
-			//console.log(`${aircraft.aircraftRegistrationNumber} ${aircraft.currentFlightIndex}`);
-			//const currentFlight = aircraft.flights.find(flight => flight.inFlight === true);
-
+		
+		activeAircrafts.map((aircraft) => {
 			const currentFlight = aircraft.flights[aircraft.currentFlightIndex];
 
 			if (currentFlight) {
-				//console.log(currentFlight);
 				let flightInfo = `${currentFlight.departureAirport} • ${currentFlight.arrivalAirport}`;
 				let flightStatus = (currentFlight.inFlight === true) ? 'In Flight' : 'Landed';
 				let flightNumber = currentFlight.flightNumber;
@@ -65,11 +66,14 @@ export default function CardPanel() {
 		});
 
 
-	}, [flightsCtx, aircrafts]);
+	}, [flightsCtx]);
+
+	// Define activeAircrafts within the component function
+	//const activeAircrafts = flightsCtx.aircrafts.filter((aircraft) => aircraft.isActive === true);
 
 	return (
 		<>
-			{aircrafts && aircrafts.map((aircraft, index) => (
+			{activeAircrafts && activeAircrafts.map((aircraft, index) => (
 				<div className="card mb-2 cursor-pointer"
 					key={aircraft._id}
 					ref={(el) => (cardRefs.current[aircraft._id] = el)}

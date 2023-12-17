@@ -1,6 +1,6 @@
 import { AirplaneMarkerContextProvider } from '../../context/AirplaneMarkerContext.jsx';
 
-import Map from '../Map/Map.jsx';
+import Map from './Map/Map.jsx';
 import CardPanel from './CardPanel.jsx';
 
 export default function Home() {
