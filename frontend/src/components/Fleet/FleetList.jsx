@@ -9,6 +9,10 @@ export default function FleetList() {
 	const [aircrafts, setAircrafts] = useState([]);
 
 
+	/**
+	 * change aicraft status 
+	 * and update Flights Context
+	 */
 	const handleCkickStatus = async (e, aircraftId, isActive) => {
 		e.preventDefault();
 
@@ -17,11 +21,9 @@ export default function FleetList() {
 
 		try {
 			await aircraftsService.edit(aircraftId, data);
-
 			const updatedAircrafts = await aircraftsService.getAll();
 
-			flightsCtx.aircrafts = updatedAircrafts;
-			updateFlightsCtx(flightsCtx);
+			updateFlightsCtx({ aircrafts: updatedAircrafts });
 
 		} catch (err) {
 			console.log(err);

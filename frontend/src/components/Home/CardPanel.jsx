@@ -7,7 +7,7 @@ import { useMarkerContext } from "../../context/AirplaneMarkerContext.jsx";
 
 export default function CardPanel() {
 
-	const [contextValue, updateFlightsCtx] = useContext(FlightsContext);
+	const [flightsCtx, updateFlightsCtx] = useContext(FlightsContext);
 	const [aircrafts, setAircrafts] = useState([]);
 
 	const cardRefs = useRef([]);
@@ -40,11 +40,11 @@ export default function CardPanel() {
 	useEffect(() => {
 
 		// skip initial render
-		if (Object.keys(contextValue).length === 0) {
+		if (Object.keys(flightsCtx).length === 0) {
 			return;
 		}
 
-		setAircrafts(contextValue.aircrafts);
+		setAircrafts(flightsCtx.aircrafts);
 
 		aircrafts.map((aircraft) => {
 			//console.log(`${aircraft.aircraftRegistrationNumber} ${aircraft.currentFlightIndex}`);
@@ -65,7 +65,7 @@ export default function CardPanel() {
 		});
 
 
-	}, [contextValue, aircrafts]);
+	}, [flightsCtx, aircrafts]);
 
 	return (
 		<>
