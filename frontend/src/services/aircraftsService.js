@@ -27,3 +27,16 @@ export const getOneByCode = async (code) => {
 
     return result;
 };
+
+export const create = async (data) => {
+    const addData = {
+        ...data,
+        currentFlightIndex: 0,
+        isActive: true,
+    }
+    const result = await request.post(baseUrl, addData);
+
+    return result;
+};
+
+export const remove = async (id) => request.delete(`${baseUrl}/${id}`);

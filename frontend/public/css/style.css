@@ -25,3 +25,9 @@ main {
 }
 
 .cursor-pointer { cursor: pointer; }
+
+table.table td, 
+table.table th {
+	text-align: left;
+	vertical-align: middle;
+}
