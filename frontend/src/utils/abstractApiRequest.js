@@ -2,44 +2,63 @@
  * Abstract utility for handling Fetch API requests.
  */
 const api = {
+
 	/**
-	 * GET request
+	 * Generic 
 	 */
-	get: async (url) => {
+	request: async (url, options) => {
 		try {
-			const response = await fetch(url);
+			const response = await fetch(url, options);
 			if (!response.ok) {
 				throw new Error(`Request failed with status: ${response.status}`);
 			}
 			return response.json();
 		} catch (error) {
-			console.error('GET request error:', error.message);
+			console.error('Request error:', error.message);
 			throw error;
 		}
+	},
+
+	/**
+	 * GET request
+	 */
+	get: async (url) => {
+		return api.request(url);
 	},
 
 	/**
 	 * POST request
 	 */
 	post: async (url, data) => {
-		try {
-			const response = await fetch(url, {
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json',
-				},
-				body: JSON.stringify(data),
-			});
+		return api.request(url, {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify(data),
+		});
+	},
 
-			if (!response.ok) {
-				throw new Error(`Request failed with status: ${response.status}`);
-			}
+	/**
+	 * PUT request
+	 */
+	put: async (url, data) => {
+		return api.request(url, {
+			method: 'PUT',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify(data),
+		});
+	},
 
-			return response.json();
-		} catch (error) {
-			console.error('POST request error:', error.message);
-			throw error;
-		}
+	/**
+	 * DELETE request
+	 */
+	delete: async (url) => {
+		return api.request(url, {
+			method: 'DELETE',
+		});
 	},
 };
 
