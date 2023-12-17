@@ -5,7 +5,7 @@ import { FlightsContext } from "../../context/FlightsContext.jsx";
 
 export default function FleetList() {
 
-	const [contextValue, updateFlightsCtx] = useContext(FlightsContext);
+	const [flightsCtx, updateFlightsCtx] = useContext(FlightsContext);
 	const [aircrafts, setAircrafts] = useState([]);
 
 
@@ -20,11 +20,8 @@ export default function FleetList() {
 
 			const updatedAircrafts = await aircraftsService.getAll();
 
-			// updateFlightsCtx({
-			// 	...contextValue,
-			// 	aircrafts: updatedAircrafts,
-			// });
-			setAircrafts(updatedAircrafts);
+			flightsCtx.aircrafts = updatedAircrafts;
+			updateFlightsCtx(flightsCtx);
 
 		} catch (err) {
 			console.log(err);
@@ -34,12 +31,12 @@ export default function FleetList() {
 	useEffect(() => {
 
 		// skip initial render
-		if (Object.keys(contextValue).length === 0) {
+		if (Object.keys(flightsCtx).length === 0) {
 			return;
 		}
 
-		setAircrafts(contextValue.aircrafts);
-	}, [contextValue])
+		setAircrafts(flightsCtx.aircrafts);
+	}, [flightsCtx])
 
 	return (
 		<>
