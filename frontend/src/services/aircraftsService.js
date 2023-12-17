@@ -32,7 +32,7 @@ export const create = async (data) => {
     const addData = {
         ...data,
         currentFlightIndex: 0,
-        isActive: true,
+        isActive: false,
     }
     const result = await request.post(baseUrl, addData);
 
