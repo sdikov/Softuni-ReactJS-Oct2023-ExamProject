@@ -100,7 +100,7 @@ export default function FlightsForm({ aircraftData, handleEditFlightData }) {
 	 */
 	const findDepartureAirport = () => {
 		const lastFlight = [...aircraftData.flights].pop();
-		return lastFlight.arrivalAirport;
+		return lastFlight?.arrivalAirport || 'PDV';
 	};
 
 	useEffect(() => {
@@ -116,6 +116,7 @@ export default function FlightsForm({ aircraftData, handleEditFlightData }) {
 
 			const lastAiport = findDepartureAirport();
 			const airportsFiltered = [...flightsCtx.airports].filter(airport => airport.code !== lastAiport);
+			console.log(airportsFiltered);
 
 			setAirports(airportsFiltered);
 
