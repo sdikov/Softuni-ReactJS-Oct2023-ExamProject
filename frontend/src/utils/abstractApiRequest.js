@@ -27,8 +27,10 @@ const api = {
 			}
 
 			if (!response.ok) {
-				console.log(response.json());
-				throw new Error(`Request failed with status: ${response.status}`);
+				const errorResponse = await response.json();
+				const errorMessage = errorResponse.message;
+				
+				throw new Error(errorMessage);
 			}
 			return response.json();
 		} catch (error) {

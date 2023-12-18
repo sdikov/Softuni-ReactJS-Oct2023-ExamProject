@@ -36,8 +36,7 @@ export default function Login() {
 		try {
 			await loginSubmitHandler(formData);
 		} catch (error) {
-			//setErrors(error.message);
-			setErrors('Login failed. Invalid credentials or password');
+			setErrors(error.message);
 		}
 
 		//onLogin(username, password);

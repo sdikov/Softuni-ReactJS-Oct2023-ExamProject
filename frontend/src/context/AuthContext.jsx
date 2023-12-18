@@ -26,19 +26,23 @@ const AuthProvider = ({ children }) => {
 	});
 
 	/**
-	 * logout
+	 * Register / Create User
 	 */
-	const logoutHandler = async () => {
-		const result = await usersService.logout();
+	const registerSubmitHandler = async (formData) => {
 
-		setAuth({});
-		localStorage.removeItem('auth');
+		const result = await usersService.register(formData);
+
+		const serializedValue = JSON.stringify(result);
+		localStorage.setItem('auth', serializedValue);
+
+		setAuth({ ...auth, ...result });		
 		navigate('/');
-	 };
+	};
 
-	 /**
-	 * login
-	 */
+
+	/**
+	* login
+	*/
 	const loginSubmitHandler = async (formData) => {
 
 		const result = await usersService.login(formData.email, formData.password);
@@ -47,11 +51,22 @@ const AuthProvider = ({ children }) => {
 		localStorage.setItem('auth', serializedValue);
 
 		setAuth({ ...auth, ...result });
+		navigate('/');
+	};
 
+	/**
+	 * logout
+	 */
+	const logoutHandler = async () => {
+		const result = await usersService.logout();
+
+		setAuth({});
+		localStorage.removeItem('auth');
 		navigate('/');
 	};
 
 	const values = {
+		registerSubmitHandler,
 		loginSubmitHandler,
 		logoutHandler,
 		email: auth.email,
