@@ -16,6 +16,9 @@ export default function Map({ }) {
 	const [aircrafts, setAircrafts] = useState([]);
 	const [flights, setFlights] = useState([]);
 
+	// console.log(flightsCtx);
+	// return;
+
 	let activeAircrafts = [];
 
 	const darkMapUrl = 'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png';
@@ -35,7 +38,7 @@ export default function Map({ }) {
 
 	activeAircrafts = aircrafts.filter((aircraft) => aircraft.isActive === true) || [];
 	//console.log(activeAircrafts);
-
+	
 	return (
 		<MapContainer center={[42.5049, 25.3188]} zoom={8}>
 			{/* <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" attribution='© OpenStreetMap contributors' /> */}

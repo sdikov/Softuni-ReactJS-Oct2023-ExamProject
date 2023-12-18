@@ -7,9 +7,27 @@ const api = {
 	 * Generic 
 	 */
 	request: async (url, options) => {
+
+		const auth = JSON.parse(localStorage.getItem('auth'));
+		if (auth) {
+			console.log('authenticated rq');
+			options.headers = {
+				...options.headers,
+				'X-Authorization': auth.accessToken
+			}
+			// console.log(auth);
+			//console.log(options);
+		}
+
 		try {
 			const response = await fetch(url, options);
+
+			if (response.status === 204) {
+				return {};
+			}
+
 			if (!response.ok) {
+				console.log(response.json());
 				throw new Error(`Request failed with status: ${response.status}`);
 			}
 			return response.json();
@@ -23,7 +41,12 @@ const api = {
 	 * GET request
 	 */
 	get: async (url) => {
-		return api.request(url);
+		return api.request(url, {
+			method: 'GET',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+		});
 	},
 
 	/**
