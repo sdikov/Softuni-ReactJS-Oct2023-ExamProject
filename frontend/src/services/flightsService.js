@@ -16,3 +16,18 @@ export const getManyByAircraftId = async (id) => {
     const flights = Object.values(result);
     return flights.filter(flight => flight.aircraftId === id);
  }
+
+ export const create = async (data) => {
+
+    const addData = {
+        ...data,
+        passengerCount: Math.floor(Math.random() * 220) + 50,
+        status: "scheduled",
+        isLanded: false,
+        inFlight: false,
+    }
+
+    const result = await request.post(baseUrl, addData);
+
+    return result;
+};

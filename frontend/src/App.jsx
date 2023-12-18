@@ -5,6 +5,7 @@ import Home from './components/Home/Home.jsx';
 import Login from './components/Auth/Login.jsx';
 import Register from './components/Auth/Register.jsx';
 import Fleet from './components/Fleet/Fleet.jsx';
+import Flights from './components/Flights/Flights.jsx';
 
 import { FlightsContextProvider } from "./context/FlightsContext.jsx";
 
@@ -22,6 +23,7 @@ function App() {
               <Route path="/auth/login" element={<Login />} />
               <Route path="/auth/register" element={<Register />} />
               <Route path="/fleet" element={<Fleet />} />
+              <Route path="/flights/:aicraftId" element={<Flights />} />
             </Routes>
 
           </main >
