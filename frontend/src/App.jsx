@@ -4,6 +4,7 @@ import { AuthProvider } from './context/AuthContext.jsx';
 
 import Header from './components/Header/Header.jsx';
 import Home from './components/Home/Home.jsx';
+import AuthGuard from './components/Auth/AuthGuard.jsx';
 import Login from './components/Auth/Login.jsx';
 import Logout from './components/Auth/Logout.jsx';
 import Register from './components/Auth/Register.jsx';
@@ -27,9 +28,12 @@ function App() {
                 <Route path="/" element={<Home />} />
                 <Route path="/auth/login" element={<Login />} />
                 <Route path="/auth/register" element={<Register />} />
-                <Route path="/auth/logout" element={<Logout />} />
                 <Route path="/fleet" element={<Fleet />} />
                 <Route path="/flights/:aicraftId" element={<Flights />} />
+
+                <Route element={<AuthGuard />}>
+                  <Route path="/auth/logout" element={<Logout />} />
+                </Route>
               </Routes>
 
             </main >
