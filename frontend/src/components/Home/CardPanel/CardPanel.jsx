@@ -10,8 +10,8 @@ import { useMarkerContext } from "../../../context/AirplaneMarkerContext.jsx";
 export default function CardPanel() {
 
 	const [flightsCtx, updateFlightsCtx] = useContext(FlightsContext);
-	//const [aircrafts, setAircrafts] = useState([]);
-	const [activeAircrafts, setActiveAircrafts] = useState([]);
+	const [aircrafts, setAircrafts] = useState([]);
+	//const [activeAircrafts, setActiveAircrafts] = useState([]);
 
 	const cardRefs = useRef([]);
 	const { addRef, getRef } = useMarkerContext();
@@ -32,21 +32,23 @@ export default function CardPanel() {
 			return;
 		}
 
-		const filterAircrafts = (flightsCtx?.aircrafts || []).filter((aircraft) => aircraft.isActive === true);
-
-		setActiveAircrafts(filterAircrafts);
+		// const filterAircrafts = (flightsCtx?.aircrafts || []).filter((aircraft) => aircraft.isActive === true);
+		// setActiveAircrafts(filterAircrafts);
+		setAircrafts(flightsCtx.aircrafts);
 
 	}, [flightsCtx]);
 
 	return (
 		<>
-			{activeAircrafts.map((aircraft) => (
-				<CardPanelItem
-					key={aircraft._id}
-					onClick={() => handleCardClick(aircraft._id)}
-					aircraft={aircraft}
-				/>
-			))}
+			{aircrafts && aircrafts.map((aircraft, index) => {
+				if (aircraft.isActive) {
+					return <CardPanelItem
+						key={aircraft._id}
+						onClick={() => handleCardClick(aircraft._id)}
+						aircraft={aircraft}
+					/>
+				}
+			})}
 		</>
 	);
 }

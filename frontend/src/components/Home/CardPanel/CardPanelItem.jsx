@@ -13,34 +13,21 @@ export default function CardPanelItem({ onClick, aircraft }) {
 		flightStatusColor: '',
 	});
 
-	//const [aircraftState, setAircraftState] = useState(aircraft);
-
 	useEffect(() => {
-		//console.log(`${aircraft.aircraftRegistrationNumber} index is ${aircraft.currentFlightIndex} and flight status ${aircraft.flights[aircraft.currentFlightIndex].inFlight}`);
+		// console.log(`
+		// 	${aircraft.aircraftRegistrationNumber} 
+		// 	index is ${aircraft.currentFlightIndex} 
+		// 	and flight status ${aircraft.flights[aircraft.currentFlightIndex]?.inFlight}
+		// 	`);
 		const countFlights = aircraft.flights.length;
 		const currentFlight = aircraft.flights[aircraft.currentFlightIndex];
 
-		console.log("Aircraft prop changed:", aircraft);
-		console.log(aircraft.currentFlightIndex);
-		
-		// fix for in flight issue
-		// const countFlights = aircraftState.flights.length;
-		// const currentFlight = aircraft.flights[aircraftState.currentFlightIndex];
-
-		// console.log(aircraftState.flights);
-		// console.log(`0: ${aircraftState.flights[0].inFlight}`);
-		// console.log(`1: ${aircraftState.flights[1].inFlight}`);
-		// console.log(`2: ${aircraftState.flights[2].inFlight}`);
-		// console.log(`3: ${aircraftState.flights[3].inFlight}`);
-
 		if (currentFlight) {
 			const flightInfo = `${currentFlight.departureAirport} • ${currentFlight.arrivalAirport}`;
-			//const flightStatus = currentFlight.inFlight ? 'In Flight' : 'Landed';
-			//const flightStatus = currentFlight.inFlight.toString();
 			const flightStatus = currentFlight.inFlight && !currentFlight.isLanded ? 'In Flight' : 'Landed';
 			const flightStatusColor = currentFlight.inFlight && !currentFlight.isLanded ? 'text-success' : 'text-danger';
 			const flightNumber = currentFlight.flightNumber;
-			const flightIndex = aircraft.currentFlightIndex;
+			const flightIndex = aircraft.currentFlightIndex + 1;
 
 			setState({ flightInfo, flightStatus, flightNumber, flightIndex, countFlights, flightStatusColor });
 		} else {
@@ -56,7 +43,15 @@ export default function CardPanelItem({ onClick, aircraft }) {
 					<div className='h5 font-'>{aircraft.airlineName}</div>
 				</div>
 				<div className="d-flex justify-content-between">
-					<div className="card-subtitle text-body-secondary">{state.flightNumber} ({state.flightIndex + 1} / {state.countFlights})</div>
+					<div className="card-subtitle text-body-secondary">
+						{state.flightNumber}
+						{state.countFlights && (
+							<span className='ms-1 text-info-emphasis'>
+								({state.flightIndex} / {state.countFlights})
+							</span>
+						)}
+
+					</div>
 					<div className="card-subtitle">{state.flightInfo}</div>
 				</div>
 				<p className={`card-text text-uppercase fw-bold ${state.flightStatusColor}`}>{state.flightStatus}</p>

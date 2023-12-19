@@ -21,8 +21,8 @@ const airplaneIcon = icon({
 // todo: add as atr to plane?
 //const planeSpeed = 100;
 //const planeSpeed = 300;
-//const planeSpeed = 600;
-const planeSpeed = 6400;
+const planeSpeed = 600;
+//const planeSpeed = 6400;
 
 export default function AirplaneMarker({ aircraftData, aircraftIndex }) {
 
@@ -45,16 +45,15 @@ export default function AirplaneMarker({ aircraftData, aircraftIndex }) {
 	 * Update aircrafts in global context
 	 * when the aircraft is in flight or has landed
 	*/
-	const handleUpdateFlightsCtx = (index, data, ) => {
+	const handleUpdateFlightsCtx = (data, updateflightIndex) => {
 
-		const updatedAircrafts = [...flightsCtx.aircrafts];
+		//const updatedAircrafts = [...flightsCtx.aircrafts];
 		//console.log(updatedAircrafts[aircraftIndex].flights[index].inFlight);
-		console.log(index);
+		
+		flightsCtx.aircrafts[aircraftIndex].flights[currentFlightIndex] = data;
+		flightsCtx.aircrafts[aircraftIndex].currentFlightIndex = updateflightIndex;
 
-		updatedAircrafts[aircraftIndex].flights[index] = data;
-		updatedAircrafts[aircraftIndex].currentFlightIndex = currentFlightIndex;
-		const res = updateFlightsCtx({ aircrafts: updatedAircrafts });
-		//console.log(res.aircrafts[aircraftIndex].flights);
+		updateFlightsCtx({ aircrafts: flightsCtx.aircrafts });
 	};
 
 	/**
@@ -100,7 +99,8 @@ export default function AirplaneMarker({ aircraftData, aircraftIndex }) {
 		// `);
 
 		currentFlightData.isLanded = true;
-		handleUpdateFlightsCtx(currentFlightIndex, currentFlightData);
+		//handleUpdateFlightsCtx(currentFlightIndex, currentFlightData, currentFlightIndex + 1);
+		handleUpdateFlightsCtx(currentFlightData, currentFlightIndex + 1);
 		setCurrentFlightIndex((currentFlightIndex) => currentFlightIndex + 1);
 	};
 
@@ -113,7 +113,7 @@ export default function AirplaneMarker({ aircraftData, aircraftIndex }) {
 		}
 
 		const currentFlightData = flights[currentFlightIndex];
-
+		
 		const startPoint = [
 			currentFlightData.departureAirportInfo.latitude,
 			currentFlightData.departureAirportInfo.longitude
@@ -142,11 +142,8 @@ export default function AirplaneMarker({ aircraftData, aircraftIndex }) {
 			setTimeout(() => {
 				markerRef.current.movingMarkerElement.start();
 				currentFlightData.inFlight = true;
-				
-				//console.log(currentFlightIndex);
-				//console.log(currentFlightData);
 
-				handleUpdateFlightsCtx(currentFlightIndex, currentFlightData);
+				handleUpdateFlightsCtx(currentFlightData, currentFlightIndex);	
 
 			}, Math.floor(Math.random() * 4000) + 1000);
 
@@ -156,7 +153,7 @@ export default function AirplaneMarker({ aircraftData, aircraftIndex }) {
 			markerRef.current.movingMarkerElement.on('end', () => handleAnimationEnd(currentFlightData));
 		}
 
-	}, [currentFlightIndex, flights]);
+	}, [flights, currentFlightIndex]);
 
 	return (
 		<Marker ref={markerRef} position={[0, 0]} />

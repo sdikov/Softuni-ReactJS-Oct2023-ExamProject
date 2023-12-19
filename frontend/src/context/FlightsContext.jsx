@@ -44,6 +44,7 @@ const FlightsContextProvider = ({ children }) => {
 			flights: updateFlightsData
 		}
 
+		//console.log(contextObjValues.aircrafts[2]);
 		setContextValue(contextObjValues);
 		return contextValue;
 

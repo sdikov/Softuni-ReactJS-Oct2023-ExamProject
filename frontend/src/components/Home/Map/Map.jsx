@@ -43,18 +43,22 @@ export default function Map() {
 		// console.log(`3: ${activeAircrafts[0]?.flights[3].inFlight}`);
 
 	}, [flightsCtx, airports, aircrafts, flights]);
-	
+
 	return (
 		<MapContainer center={[42.5049, 25.3188]} zoom={8}>
 			{/* <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" attribution='© OpenStreetMap contributors' /> */}
 			<TileLayer url={darkMapUrl} attribution={darkMapAttribution} />
-			{activeAircrafts && activeAircrafts.map((aircraft, index) => (
-				<AirplaneMarker
-					key={aircraft._id}
-					aircraftData={aircraft}
-					aircraftIndex={index}
-				/>
-			))}
+
+			{aircrafts && aircrafts.map((aircraft, index) => {
+				if (aircraft.isActive) {
+					return <AirplaneMarker
+						key={aircraft._id}
+						aircraftData={aircraft}
+						aircraftIndex={index}
+					/>
+				}
+			})}
+
 			{airports && airports.map((airport) => (
 				<Airport key={airport._id} airportData={airport} />
 			))}

@@ -10,8 +10,7 @@ import { AuthContext } from "../../context/AuthContext.jsx"
 export default function Fleet() {
 
 	const { isAuthenticated } = useContext(AuthContext);
-	console.log(isAuthenticated);
-
+	
 	const [data, setData] = useState([]);
 	const handleEditAircraftData = (newData) => {
 		setData(newData);
