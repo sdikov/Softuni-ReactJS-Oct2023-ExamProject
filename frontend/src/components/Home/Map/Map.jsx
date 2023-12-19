@@ -9,17 +9,16 @@ import AirplaneMarker from './AirplaneMarker.jsx';
 
 import { FlightsContext } from "../../../context/FlightsContext.jsx";
 
-export default function Map({ }) {
+export default function Map() {
 
 	const [flightsCtx, updateFlightsCtx] = useContext(FlightsContext);
 	const [airports, setAirports] = useState([]);
 	const [aircrafts, setAircrafts] = useState([]);
+	const [activeAircrafts, setActiveAircrafts] = useState([]);
 	const [flights, setFlights] = useState([]);
 
 	// console.log(flightsCtx);
 	// return;
-
-	let activeAircrafts = [];
 
 	const darkMapUrl = 'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png';
 	const darkMapAttribution = 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors';
@@ -34,10 +33,16 @@ export default function Map({ }) {
 		if (flightsCtx.flights && flightsCtx.flights.length > 0) {
 			setFlights(flightsCtx.flights);
 		}
-	}, [flightsCtx, airports, aircrafts, flights]);
 
-	activeAircrafts = aircrafts.filter((aircraft) => aircraft.isActive === true) || [];
-	//console.log(activeAircrafts);
+		const filterAircrafts = aircrafts.filter((aircraft) => aircraft.isActive === true) || [];
+		setActiveAircrafts(filterAircrafts);
+
+		// console.log(`0: ${activeAircrafts[0]?.flights[0].inFlight}`);
+		// console.log(`1: ${activeAircrafts[0]?.flights[1].inFlight}`);
+		// console.log(`2: ${activeAircrafts[0]?.flights[2].inFlight}`);
+		// console.log(`3: ${activeAircrafts[0]?.flights[3].inFlight}`);
+
+	}, [flightsCtx, airports, aircrafts, flights]);
 	
 	return (
 		<MapContainer center={[42.5049, 25.3188]} zoom={8}>

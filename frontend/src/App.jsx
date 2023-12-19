@@ -29,9 +29,9 @@ function App() {
                 <Route path="/auth/login" element={<Login />} />
                 <Route path="/auth/register" element={<Register />} />
                 <Route path="/fleet" element={<Fleet />} />
-                <Route path="/flights/:aicraftId" element={<Flights />} />
 
                 <Route element={<AuthGuard />}>
+                  <Route path="/flights/:aicraftId" element={<Flights />} />
                   <Route path="/auth/logout" element={<Logout />} />
                 </Route>
               </Routes>

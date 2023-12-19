@@ -45,7 +45,7 @@ const FlightsContextProvider = ({ children }) => {
 		}
 
 		setContextValue(contextObjValues);
-		return contextObjValues;
+		return contextValue;
 
 	}
 

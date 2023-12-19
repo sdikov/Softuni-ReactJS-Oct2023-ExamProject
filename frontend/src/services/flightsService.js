@@ -1,4 +1,3 @@
-// import * as request from "../lib/request";
 import request from "../utils/abstractApiRequest.js";
 
 const baseUrl = 'http://localhost:3030/jsonstore/flights'

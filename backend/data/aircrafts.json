@@ -5,7 +5,9 @@
         "aircraftRegistrationNumber": "LZ-LVQ",
 		"currentFlightIndex": 0,
 		"isActive": true,
-        "_id": "d1632b6b-05db-4710-ab1d-0b7f49cda73e"
+        "_id": "d1632b6b-05db-4710-ab1d-0b7f49cda73e",
+		"_ownerId": "60f0cf0b-34b0-4abd-9769-8c42f830dffc",
+		"_ownerUsername": "Admin"
     },
     "e7f54ff5-b47f-45c6-b1e2-e38a2835ff8a": {
         "airlineName": "SoftUni Air",
@@ -13,6 +15,8 @@
         "aircraftRegistrationNumber": "LZ-PZR",
 		"currentFlightIndex": 0,
 		"isActive": true,
-        "_id": "e7f54ff5-b47f-45c6-b1e2-e38a2835ff8a"
+        "_id": "e7f54ff5-b47f-45c6-b1e2-e38a2835ff8a",
+		"_ownerId": "60f0cf0b-34b0-4abd-9769-8c42f830dffc",
+		"_ownerUsername": "Admin"
     }
 }

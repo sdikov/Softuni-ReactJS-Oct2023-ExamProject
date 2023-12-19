@@ -2,6 +2,7 @@ import { useState, useEffect, useContext, useRef } from 'react';
 
 import * as aircraftsService from '../../services/aircraftsService.js';
 import { FlightsContext } from "../../context/FlightsContext.jsx";
+import { AuthContext } from "../../context/AuthContext.jsx"
 
 const formDefaultValues = {
 	airlineName: '',
@@ -10,6 +11,8 @@ const formDefaultValues = {
 }
 
 export default function FleetForm({ aircraftData, handleEditAircraftData }) {
+
+	const { userId, username } = useContext(AuthContext);
 
 	const [flightsCtx, updateFlightsCtx] = useContext(FlightsContext);
 	const [formData, setFormData] = useState(formDefaultValues);
@@ -64,13 +67,19 @@ export default function FleetForm({ aircraftData, handleEditAircraftData }) {
 					"aircraftType": formData.aircraftType,
 					"currentFlightIndex": 0,
 					"isActive": formData.isActive,
-					"_id": formData._id
+					"_id": formData._id,
+					"_ownerId": userId,
+					"_ownerUsername": username
 				});
 				//clearForm();
 
 			} else {
 				// create
-				await aircraftsService.create(formData);
+				await aircraftsService.create({
+					...formData,
+					"_ownerId": userId,
+					"_ownerUsername": username,
+				});
 				clearForm();
 			}
 

@@ -35,7 +35,7 @@ const AuthProvider = ({ children }) => {
 		const serializedValue = JSON.stringify(result);
 		localStorage.setItem('auth', serializedValue);
 
-		setAuth({ ...auth, ...result });		
+		setAuth({ ...auth, ...result });
 		navigate('/');
 	};
 
@@ -58,17 +58,31 @@ const AuthProvider = ({ children }) => {
 	 * logout
 	 */
 	const logoutHandler = async () => {
-		const result = await usersService.logout();
+
+		try {
+			await usersService.logout();
+		} catch (error) {
+			//
+		}
 
 		setAuth({});
 		localStorage.removeItem('auth');
 		navigate('/');
 	};
 
+	/**
+	 * owner
+	 */
+	const isOwner = (userId, object) => {
+		return userId == object._ownerId;
+	};
+
 	const values = {
 		registerSubmitHandler,
 		loginSubmitHandler,
 		logoutHandler,
+		isOwner,
+		userId: auth._id,
 		email: auth.email,
 		username: auth.username,
 		isAuthenticated: !!auth.accessToken,

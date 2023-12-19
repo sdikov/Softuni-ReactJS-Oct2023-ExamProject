@@ -116,7 +116,7 @@ export default function FlightsForm({ aircraftData, handleEditFlightData }) {
 
 			const lastAiport = findDepartureAirport();
 			const airportsFiltered = [...flightsCtx.airports].filter(airport => airport.code !== lastAiport);
-			console.log(airportsFiltered);
+			//console.log(airportsFiltered);
 
 			setAirports(airportsFiltered);
 

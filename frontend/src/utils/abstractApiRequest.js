@@ -10,7 +10,7 @@ const api = {
 
 		const auth = JSON.parse(localStorage.getItem('auth'));
 		if (auth) {
-			console.log('authenticated rq');
+			//console.log('authenticated rq');
 			options.headers = {
 				...options.headers,
 				'X-Authorization': auth.accessToken
